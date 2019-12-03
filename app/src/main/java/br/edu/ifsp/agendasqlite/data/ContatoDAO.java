@@ -42,28 +42,11 @@ public class ContatoDAO {
            c.setId(cursor.getInt(0));
            c.setNome(cursor.getString(1));
            c.setFone(cursor.getString(2));
+           c.setFoneAlternativo(cursor.getString(5));
            c.setEmail(cursor.getString(3));
 
-           switch (SQLiteHelper.DATABASE_VERSION) {
-               case 2: {
-                   if (cursor.getColumnName(4).equals("true"))
-                       c.setFavorito(true);
-                   else
-                       c.setFavorito(false);
-               }
-               case 3: {
-
-               }
-
-               case 4: {
-
-               }
-
-               default: {
-
-               }
-           }
-
+           if (cursor.getInt(4) == 1) c.setFavorito(true);
+           else c.setFavorito(false);
 
            contatos.add(c);
         }
@@ -80,11 +63,17 @@ public class ContatoDAO {
 
         database = dbHelper.getWritableDatabase();
 
+        int favorito;
+
+        if (c.isFavorito()) favorito = 1;
+        else favorito = 0;
+
         ContentValues values = new ContentValues();
         values.put(SQLiteHelper.KEY_NOME, c.getNome());
         values.put(SQLiteHelper.KEY_FONE, c.getFone());
+        values.put(SQLiteHelper.KEY_FONE_ALTERNATIVO, c.getFoneAlternativo());
         values.put(SQLiteHelper.KEY_EMAIL, c.getEmail());
-        values.put(SQLiteHelper.KEY_FAVORITO, c.isFavorito());
+        values.put(SQLiteHelper.KEY_FAVORITO, favorito);
 
         long id = database.insert(SQLiteHelper.TABLE_NAME, null, values);
 
@@ -96,12 +85,17 @@ public class ContatoDAO {
     public void alterarContato(Contato c)
     {
         database = dbHelper.getWritableDatabase();
+        int favorito;
+
+        if (c.isFavorito()) favorito = 1;
+        else favorito = 0;
 
         ContentValues values = new ContentValues();
         values.put(SQLiteHelper.KEY_NOME, c.getNome());
         values.put(SQLiteHelper.KEY_FONE, c.getFone());
         values.put(SQLiteHelper.KEY_EMAIL, c.getEmail());
-        values.put(SQLiteHelper.KEY_FAVORITO, c.isFavorito());
+        values.put(SQLiteHelper.KEY_FONE_ALTERNATIVO, c.getFoneAlternativo());
+        values.put(SQLiteHelper.KEY_FAVORITO, favorito);
 
         database.update(SQLiteHelper.TABLE_NAME, values,
                      SQLiteHelper.KEY_ID +"=" +c.getId(),null);
