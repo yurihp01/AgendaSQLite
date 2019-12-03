@@ -5,14 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import br.edu.ifsp.agendasqlite.R;
+import br.edu.ifsp.agendasqlite.data.ContatoAdapter;
 import br.edu.ifsp.agendasqlite.data.ContatoDAO;
 import br.edu.ifsp.agendasqlite.model.Contato;
 
-public class CadastroActivity extends AppCompatActivity {
+public class CadastroActivity extends AppCompatActivity implements ContatoAdapter.ItemClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,5 +62,8 @@ public class CadastroActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onItemClick(View v, int position) {
 
+    }
 }

@@ -44,6 +44,27 @@ public class ContatoDAO {
            c.setFone(cursor.getString(2));
            c.setEmail(cursor.getString(3));
 
+           switch (SQLiteHelper.DATABASE_VERSION) {
+               case 2: {
+                   if (cursor.getColumnName(4).equals("true"))
+                       c.setFavorito(true);
+                   else
+                       c.setFavorito(false);
+               }
+               case 3: {
+
+               }
+
+               case 4: {
+
+               }
+
+               default: {
+
+               }
+           }
+
+
            contatos.add(c);
         }
 
@@ -63,6 +84,7 @@ public class ContatoDAO {
         values.put(SQLiteHelper.KEY_NOME, c.getNome());
         values.put(SQLiteHelper.KEY_FONE, c.getFone());
         values.put(SQLiteHelper.KEY_EMAIL, c.getEmail());
+        values.put(SQLiteHelper.KEY_FAVORITO, c.isFavorito());
 
         long id = database.insert(SQLiteHelper.TABLE_NAME, null, values);
 
@@ -79,12 +101,14 @@ public class ContatoDAO {
         values.put(SQLiteHelper.KEY_NOME, c.getNome());
         values.put(SQLiteHelper.KEY_FONE, c.getFone());
         values.put(SQLiteHelper.KEY_EMAIL, c.getEmail());
+        values.put(SQLiteHelper.KEY_FAVORITO, c.isFavorito());
 
         database.update(SQLiteHelper.TABLE_NAME, values,
                      SQLiteHelper.KEY_ID +"=" +c.getId(),null);
 
         database.close();
     }
+
 
     public void excluirContato (Contato c)
     {

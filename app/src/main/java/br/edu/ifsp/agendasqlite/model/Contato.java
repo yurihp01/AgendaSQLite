@@ -8,14 +8,23 @@ public class Contato implements Serializable {
     private String nome;
     private String fone;
     private String email;
+    private boolean isFavorito;
 
     public Contato() {
+    }
+
+    public Contato(String nome, String fone, String email, boolean isFavorito) {
+        this.nome = nome;
+        this.fone = fone;
+        this.email = email;
+        this.isFavorito = isFavorito;
     }
 
     public Contato(String nome, String fone, String email) {
         this.nome = nome;
         this.fone = fone;
         this.email = email;
+        this.isFavorito = false;
     }
 
 
@@ -60,5 +69,13 @@ public class Contato implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public boolean isFavorito() {
+        return isFavorito;
+    }
+
+    public void setFavorito(boolean favorito) {
+        isFavorito = favorito;
     }
 }

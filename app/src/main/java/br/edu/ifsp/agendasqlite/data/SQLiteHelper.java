@@ -10,13 +10,14 @@ class SQLiteHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "agenda.db";
     static final String TABLE_NAME ="contatos";
+    static final String PRAGMA ="PRAGMA contatos";
 
     static final String KEY_ID = "id";
     static final String KEY_NOME = "nome";
     static final String KEY_FONE = "fone";
     static final String KEY_EMAIL = "email";
-
-    private static final int DATABASE_VERSION = 1;
+    static final String KEY_FAVORITO = "favorito";
+    static final int DATABASE_VERSION = 2;
 
     private static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
                                                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -36,6 +37,8 @@ class SQLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        if (oldVersion < 2) {
+            db.execSQL("ALTER TABLE " + TABLE_NAME + " ADD " + KEY_FAVORITO + " BOOLEAN;");
+        }
     }
 }

@@ -1,11 +1,11 @@
 package br.edu.ifsp.agendasqlite.data;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -46,12 +46,8 @@ public class ContatoAdapter
 
     public void atualizaContatoAdapter(Contato c)
     {
-
-
         contatos.set(contatos.indexOf(c),c);
         notifyItemChanged(contatos.indexOf(c));
-
-
     }
 
     public void apagaContatoAdapter(Contato c)
@@ -66,12 +62,6 @@ public class ContatoAdapter
     public List<Contato> getContactListFiltered()
     {
         return contactListFiltered;
-    }
-
-    public void setClickListener(ItemClickListener itemClickListener)
-    {
-        clickListener = itemClickListener;
-
     }
 
     public ContatoAdapter(List<Contato> contatos)
@@ -91,6 +81,14 @@ public class ContatoAdapter
 
     @Override
     public void onBindViewHolder(@NonNull ContatoViewHolder holder, int position) {
+            if (contactListFiltered.get(position).isFavorito()) {
+                holder.favorito.setImageDrawable(
+                        holder.itemView.getContext().getDrawable(R.drawable.ic_star_yellow));
+            } else {
+                holder.favorito.setImageDrawable(
+                        holder.itemView.getContext().getDrawable(R.drawable.ic_star_black));
+            }
+
             holder.nome.setText(contactListFiltered.get(position).getNome());
     }
 
@@ -138,24 +136,41 @@ public class ContatoAdapter
             implements View.OnClickListener
     {
         final TextView nome;
+        final ImageView favorito;
 
         public ContatoViewHolder(@NonNull View itemView) {
             super(itemView);
-            nome = (TextView) itemView.findViewById(R.id.nome);
+            nome = itemView.findViewById(R.id.nome);
+            favorito = itemView.findViewById(R.id.favoritar);
+
+            favorito.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (clickListener != null) {
+                        clickListener.onItemClick(view, getAdapterPosition());
+                    }
+                }
+            });
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-              if (clickListener!=null)
-                  clickListener.onItemClick(getAdapterPosition());
+            if (ContatoAdapter.clickListener!=null)
+                ContatoAdapter.clickListener.onItemClick(v, getAdapterPosition());
         }
     }
 
 
+    public void setClickListener(ItemClickListener itemClickListener)
+    {
+        ContatoAdapter.clickListener = itemClickListener;
+
+    }
+
     public  interface ItemClickListener
     {
-        void onItemClick(int position);
+        void onItemClick(View v, int position);
     }
 
 
