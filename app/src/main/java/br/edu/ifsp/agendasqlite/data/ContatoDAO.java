@@ -57,7 +57,9 @@ public class ContatoDAO {
         return contatos;
     }
 
-
+/* TODO corrigir updates do banco de acordo com a versao, pois se eu desinstalar e instalar de novo
+    direto na versao 3, a 2 nao virá automaticamente
+ */
     public long incluirContato (Contato c)
     {
 

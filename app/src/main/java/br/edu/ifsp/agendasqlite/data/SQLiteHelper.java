@@ -37,18 +37,10 @@ class SQLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-       switch (oldVersion) {
-           case 1:
+       if (oldVersion < 2)
             db.execSQL("ALTER TABLE " + TABLE_NAME + " ADD " + KEY_FAVORITO + " BOOLEAN;");
-            break;
-           case 2:
-               db.execSQL("ALTER TABLE " + TABLE_NAME + " ADD " + KEY_FONE_ALTERNATIVO + " TEXT;");
-               break;
-           default:
-               break;
-        }
 
-
-
+       if (oldVersion < 3)
+            db.execSQL("ALTER TABLE " + TABLE_NAME + " ADD " + KEY_FONE_ALTERNATIVO + " TEXT;");
     }
 }
