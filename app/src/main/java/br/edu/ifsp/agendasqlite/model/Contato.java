@@ -9,17 +9,19 @@ public class Contato implements Serializable {
     private String fone;
     private String email;
     private String foneAlternativo;
+    private String data;
     private boolean isFavorito;
 
     public Contato() {
     }
 
-    public Contato(String nome, String fone, String foneAlternativo, String email) {
+    public Contato(String nome, String data, String fone, String foneAlternativo, String email) {
         this.nome = nome;
         this.fone = fone;
         this.email = email;
         this.isFavorito = false;
         this.foneAlternativo = foneAlternativo;
+        this.data = data;
     }
 
 
@@ -33,6 +35,13 @@ public class Contato implements Serializable {
 
     }
 
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
 
     public int getId() {
         return id;

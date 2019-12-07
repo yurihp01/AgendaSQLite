@@ -44,6 +44,7 @@ public class ContatoDAO {
            c.setFone(cursor.getString(2));
            c.setFoneAlternativo(cursor.getString(5));
            c.setEmail(cursor.getString(3));
+           c.setData(cursor.getString(6));
 
            if (cursor.getInt(4) == 1) c.setFavorito(true);
            else c.setFavorito(false);
@@ -76,6 +77,7 @@ public class ContatoDAO {
         values.put(SQLiteHelper.KEY_FONE_ALTERNATIVO, c.getFoneAlternativo());
         values.put(SQLiteHelper.KEY_EMAIL, c.getEmail());
         values.put(SQLiteHelper.KEY_FAVORITO, favorito);
+        values.put(SQLiteHelper.KEY_DATA, c.getData());
 
         long id = database.insert(SQLiteHelper.TABLE_NAME, null, values);
 
@@ -98,6 +100,7 @@ public class ContatoDAO {
         values.put(SQLiteHelper.KEY_EMAIL, c.getEmail());
         values.put(SQLiteHelper.KEY_FONE_ALTERNATIVO, c.getFoneAlternativo());
         values.put(SQLiteHelper.KEY_FAVORITO, favorito);
+        values.put(SQLiteHelper.KEY_DATA, c.getData());
 
         database.update(SQLiteHelper.TABLE_NAME, values,
                      SQLiteHelper.KEY_ID +"=" +c.getId(),null);

@@ -44,8 +44,9 @@ public class CadastroActivity extends AppCompatActivity implements ContatoAdapte
             String fone = ((EditText) findViewById(R.id.editTextFone)).getText().toString();
             String foneAlternativo = ((EditText) findViewById(R.id.editTextFoneAlternativo)).getText().toString();
             String email = ((EditText) findViewById(R.id.editTextEmail)).getText().toString();
+            String data = ((EditText) findViewById(R.id.editTextData)).getText().toString();
 
-            Contato c = new Contato(nome,fone,foneAlternativo, email);
+            Contato c = new Contato(nome, data, fone, foneAlternativo, email);
 
             int idContato = (int) dao.incluirContato(c);
             c.setId(idContato);
